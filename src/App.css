@@ -1,0 +1,60 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: blue;
+}
+
+header {
+	text-align: center;
+	color: white;
+}
+
+.wrapper {
+	display: flex;
+	justify-content: space-around;
+}
+
+.div-lineup {
+	min-height: 50vh;
+	background-color: green;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.div-lineup-boards {
+	display: flex;
+	justify-content: space-around;
+}
+
+.div-board {
+	background-color: white;
+	text-align: center;
+	margin: 10px;
+	min-width: 20vh;
+	overflow: auto;
+}
+
+.div-board-lineup{
+	max-height: 50vh;	
+}
+
+.div-player {
+	background-image: url('./images/jersey.png');
+	background-size: 50% 100%;
+	background-repeat: no-repeat;
+	background-position-x: center;
+	padding: 5px;
+	text-align: center;
+}
+
+.div-player img {
+	width: 20px;
+	height: 20px;
+}
+
+.hide {
+	display: none;
+}
