@@ -3,8 +3,14 @@
 	padding: 0;
 }
 
+h1, h2, h3, h4, h5 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
-	background-color: blue;
+	background-image: url('./images/bg_flrbl_pitch.jpg');
+	background-size: contain;
+	background-repeat: repeat-y;
 }
 
 header {
@@ -12,15 +18,39 @@ header {
 	color: white;
 }
 
-.wrapper {
-	display: flex;
-	justify-content: space-around;
+button {
+	background-color: white;
+	border-radius: 10px;
 }
 
+img {
+	width: 20px;
+	height: 20px;
+}
+
+.App {
+	padding-top: 20px;
+}
+
+.wrapper {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+}
+
+.div-nav {
+	text-align: right;
+}
+
+ /* LINEUP */
 .div-lineup {
 	min-height: 50vh;
-	background-color: green;
+	padding-top: 10px;
 	margin-bottom: 10px;
+	background-image: url('./images/flrbl_pitch.png');
+	background-size: 100% 100%;
 	text-align: center;
 }
 
@@ -29,32 +59,62 @@ header {
 	justify-content: space-around;
 }
 
+ /* BOARD */
 .div-board {
 	background-color: white;
 	text-align: center;
 	margin: 10px;
+	padding: 10px;
 	min-width: 20vh;
 	overflow: auto;
+	border-radius: 5px;
 }
 
 .div-board-lineup{
-	max-height: 50vh;	
+	background-color: transparent;
+	max-height: 66vh;
+	vertical-align: middle;
 }
 
+ /* PLAYER */
 .div-player {
+	padding: 3px;
+	margin-bottom: 5px;
+	text-align: center;
+	border: 1px solid blue;
+	border-radius: 10px;
+	background-color: blue;
+	color: white;
+}
+
+.div-player-row {
+	display: flex;
+	justify-content: center;
+	vertical-align: middle;
+}
+
+.div-player-row h4{
+	line-height: 1.5;
+	margin-left: 5px;
+	margin-right: 5px;
+	display: inline-block;
+}
+
+.div-player-jersey {
 	background-image: url('./images/jersey.png');
-	background-size: 50% 100%;
+	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-position-x: center;
-	padding: 5px;
-	text-align: center;
+	width: 60px;
+	height: 60px;
 }
 
-.div-player img {
-	width: 20px;
-	height: 20px;
+.div-player-jersey h2 {
+	line-height: 2.5;
+	display: inline-block;
 }
 
 .hide {
-	display: none;
+	/*display: none;*/
+	visibility: collapse;
 }

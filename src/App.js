@@ -40,18 +40,25 @@ function App() {
 				<h1>Zostavy</h1>
 			</header>
 
-			<button onClick={addLineup}>Add lineup</button>
-			<button onClick={deleteLineup} className={`${lineups.length > 1 ? "" : "hide"}`}>Delete lineup</button>
 			<div className="wrapper">
-				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers} lineupID={0} title="Hraci" position="" />
+					<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers} lineupID={0} title="Hraci" position="" />
 
-				<div>
-					{
-						lineups.map(lineup => (
-							<Lineup key={lineup.id} allPlayers={allPlayers} setAllPlayers={setAllPlayers} lineupID={lineup.id} lineupMax={lineups.length} />
-						))
-					}
-				</div>
+					<div>
+						<div className="div-nav">
+							<button onClick={addLineup}>
+								<img alt="add" src={require('./images/add.png')} />
+							</button>
+							<button onClick={deleteLineup} className={`${lineups.length > 1 ? "" : "hide"}`}>
+								<img alt="delete" src={require('./images/delete.png')} />
+							</button>
+						</div>
+
+						{
+							lineups.map(lineup => (
+								<Lineup key={lineup.id} allPlayers={allPlayers} setAllPlayers={setAllPlayers} lineupID={lineup.id} lineupMax={lineups.length} />
+							))
+						}
+					</div>
 			</div>
     </div>
   );

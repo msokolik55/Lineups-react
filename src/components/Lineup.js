@@ -6,7 +6,7 @@ import Board from './Board'
 const Lineup = ({ allPlayers, setAllPlayers, lineupID, lineupMax }) => {
 	return (
 		<div className="div-lineup">
-			<h3>Line up {lineupID}</h3>
+			<h3>Zostava {lineupID}</h3>
 
 			<div className="div-lineup-boards">
 				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
@@ -19,7 +19,7 @@ const Lineup = ({ allPlayers, setAllPlayers, lineupID, lineupMax }) => {
 
 				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
 					lineupID={lineupID} lineupMax={lineupMax}
-					title="Utocnici" position="attacker" />			
+					title="Utocnici" position="attacker" />
 			</div>
 		</div>
 	)

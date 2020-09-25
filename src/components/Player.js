@@ -79,27 +79,40 @@ const Player = (props) => {
 			//onDragOver={dragOver}
 			>
 
-			<div className="div-player-jersey">
-				<h3>{props.player.name}</h3>
-				<h4>{props.player.number}</h4>
+			<div className="div-player-row">
+
+				<div className="div-player-jersey">
+					<h2>{props.player.number}</h2>
+				</div>
 			</div>
 
-			<div className="div-player-buttons">
-				<button onClick={moveToFree}><img alt="free" src={require('../images/free.png')} /></button>
-				<button onClick={moveToGoalkeepers}><img alt="gk" src={require('../images/goalkeeper.png')} /></button>
-				<button onClick={moveToDefenders}><img alt="df" src={require('../images/defender.png')} /></button>
-				<button onClick={moveToAttackers} > <img alt="at" src={require('../images/attacker.png')} /></button>
-			</div>
-
-			<div className="div-player-buttons">
+			<div className="div-player-row">
 				<button onClick={decreaseLineup} className={`${(props.player.lineup > 1) ? "" : "hide"}`}>
 					<img alt="up" src={require('../images/up.png')} />
 				</button>
+
+				<h4>{props.player.name}</h4>
 
 				<button onClick={increaseLineup} className={`${(props.player.lineup < props.lineupMax && props.player.lineup > 0) ? "" : "hide"}`}>
 					<img alt="down" src={require('../images/down.png')} />
 				</button>
 			</div>
+
+			<div className="div-player-row">
+				<button className={`${(props.player.position === "") ? "hide" : ""}`} onClick={moveToFree}>
+					<img alt="free" src={require('../images/delete.png')} />
+				</button>
+				<button className={`${(props.player.position === "goalkeeper") ? "hide" : ""}`} onClick={moveToGoalkeepers}>
+					<img alt="gk" src={require('../images/goalkeeper.png')} />
+				</button>
+				<button className={`${(props.player.position === "defender") ? "hide" : ""}`} onClick={moveToDefenders}>
+					<img alt="df" src={require('../images/defender.png')} />
+				</button>
+				<button className={`${(props.player.position === "attacker") ? "hide" : ""}`} onClick={moveToAttackers} >
+					<img alt="at" src={require('../images/attacker.png')} />
+				</button>
+			</div>
+
     </div>
   )
 }
