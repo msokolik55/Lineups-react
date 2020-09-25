@@ -1,15 +1,17 @@
 import React from 'react'
 
 const Player = (props) => {
-	//const dragStart = (e) => {
-	//	const target = e.target;
-	//	e.dataTransfer.setData('player_id', target.id);
-	//}
 
-	//const dragOver = (e) => {
-	//	e.stopPropagation();
-	//}
+	const dragStart = (e) => {
+		const target = e.target;
+		e.dataTransfer.setData('player_id', target.id);
+	}
 
+	const dragOver = (e) => {
+		e.stopPropagation();
+	}
+
+	/*
 	// alternating positions
 	const moveToFree = () => {
 		props.setAllPlayers(props.allPlayers.map((iplayer) => {
@@ -69,14 +71,15 @@ const Player = (props) => {
 			return iplayer;
 		}));
 	}
+	*/
 
 	return (
 		<div
 			id={props.player.id}
 			className="div-player"
-			//draggable
-			//onDragStart={dragStart}
-			//onDragOver={dragOver}
+			draggable
+			onDragStart={dragStart}
+			onDragOver={dragOver}
 			>
 
 			<div className="div-player-row">
@@ -87,17 +90,22 @@ const Player = (props) => {
 			</div>
 
 			<div className="div-player-row">
-				<button onClick={decreaseLineup} className={`${(props.player.lineup > 1) ? "" : "hide"}`}>
+				{/*
+					<button onClick={decreaseLineup} className={`${(props.player.lineup > 1) ? "" : "hide"}`}>
 					<img alt="up" src={require('../images/up.png')} />
 				</button>
+				*/}
 
 				<h4>{props.player.name}</h4>
 
-				<button onClick={increaseLineup} className={`${(props.player.lineup < props.lineupMax && props.player.lineup > 0) ? "" : "hide"}`}>
+				{/*
+					<button onClick={increaseLineup} className={`${(props.player.lineup < props.lineupMax && props.player.lineup > 0) ? "" : "hide"}`}>
 					<img alt="down" src={require('../images/down.png')} />
 				</button>
+				*/}
 			</div>
 
+			{/*
 			<div className="div-player-row">
 				<button className={`${(props.player.position === "") ? "hide" : ""}`} onClick={moveToFree}>
 					<img alt="free" src={require('../images/delete.png')} />
@@ -112,6 +120,7 @@ const Player = (props) => {
 					<img alt="at" src={require('../images/attacker.png')} />
 				</button>
 			</div>
+			*/}
 
     </div>
   )

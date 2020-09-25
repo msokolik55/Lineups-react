@@ -61,31 +61,44 @@ img {
 
  /* BOARD */
 .div-board {
-	background-color: white;
 	text-align: center;
-	margin: 10px;
-	padding: 10px;
+	margin: 0px 10px 0px 10px;
 	min-width: 20vh;
-	overflow: auto;
 	border-radius: 5px;
+	color: white;
 }
 
-.div-board-lineup{
-	background-color: transparent;
+.div-board-title {
+	background-color: navy;
+	padding: 10px 0px 10px 0px;
+}
+
+.div-board-players {
+	background-color: white;
+	padding-top: 10px;
+	margin-bottom: 10px;
+}
+
+.div-board-lineup {
 	max-height: 66vh;
-	vertical-align: middle;
+	overflow: auto;
 }
 
  /* PLAYER */
 .div-player {
 	padding: 3px;
-	margin-bottom: 5px;
+	margin: auto;
+	min-width: 60px;
+	max-width: 50%;
 	text-align: center;
-	border: 1px solid blue;
 	border-radius: 10px;
-	background-color: blue;
-	color: white;
+	color: navy;
 }
+
+/*.div-player:hover {
+	background-color: red;
+}
+*/
 
 .div-player-row {
 	display: flex;
