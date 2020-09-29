@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 // Components
@@ -15,24 +15,51 @@ function App() {
 		{ id: 5, name: "Vlado", number: 3, lineup: 0, position: "" },
 		{ id: 6, name: "Roman", number: 1, lineup: 0, position: "" },
 	])
-
 	const [lineups, setLineups] = useState([
-		{ id: 1 },
-		{ id: 2 }
+		{ id: 0 },
+		{ id: 1 }
 	]);
+	const [updatedIDs, setUpdatedIDs] = useState(true);
 
 	const addLineup = () => {
-		setLineups(lineups.concat({ id: lineups.length + 1 }));
+		setLineups(lineups.concat({ id: lineups.length }));
 	}
-	const deleteLineup = () => {
+	const deleteLineup = (id) => {
 		setAllPlayers(allPlayers.map(iplayer => {
-			if (iplayer.lineup === lineups.length) {
+			if (iplayer.lineup === id) {
 				return { ...iplayer, lineup: 0, position: "" }
 			}
 			return iplayer;
 		}));
-		setLineups(lineups.filter(ilineup => ilineup.id !== lineups.length));
+		setLineups(lineups.filter(ilineup => ilineup.id !== id));
+		setUpdatedIDs(false);
 	}
+
+	const updateLineupsID = () => {
+		if(!updatedIDs) {
+			// changing lineup ID
+			setLineups(lineups.map((ilineup, index) => {
+				if(ilineup.id !== index) {
+
+					// changing players lineup ID
+					setAllPlayers(allPlayers.map(iplayer => {
+						if(iplayer.lineup === ilineup.id) {
+							return { ...iplayer, lineup: index };
+						}
+						return iplayer;
+					}));
+
+					return { ...ilineup, id: index };
+				}
+				return ilineup;
+			}))
+		}
+		setUpdatedIDs(true);
+	}
+
+	useEffect(() => {
+		updateLineupsID();
+	}, [lineups])
 
   return (
 		<div className="App">
@@ -48,14 +75,18 @@ function App() {
 							<button onClick={addLineup}>
 								<img alt="add" src={require('./images/add.png')} />
 							</button>
-							<button onClick={deleteLineup} className={`${lineups.length > 1 ? "" : "hide"}`}>
-								<img alt="delete" src={require('./images/delete.png')} />
-							</button>
+						{
+						//	<button onClick={deleteLineup} className={`${lineups.length > 1 ? "" : "hide"}`}>
+						//		<img alt="delete" src={require('./images/delete.png')} />
+						//	</button>
+						}
 						</div>
 
 						{
-							lineups.map(lineup => (
-								<Lineup key={lineup.id} allPlayers={allPlayers} setAllPlayers={setAllPlayers} lineupID={lineup.id} lineupMax={lineups.length} />
+							lineups.map((ilineup, index) => (
+								<Lineup key={index} allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+																		lineups={lineups} setLineups={setLineups} deleteLineup={deleteLineup}
+																		lineupID={index} lineupMax={lineups.length - 1} />
 							))
 						}
 					</div>

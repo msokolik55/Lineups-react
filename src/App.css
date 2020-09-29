@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5 {
 
 body {
 	background-image: url('./images/bg_flrbl_pitch.jpg');
-	background-size: contain;
+	background-size: 100% auto;
 	background-repeat: repeat-y;
 }
 
@@ -36,6 +36,11 @@ img {
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
+	display: flex;
+	justify-content: center;
+}
+
+.div-row {
 	display: flex;
 	justify-content: center;
 }
