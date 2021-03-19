@@ -34,6 +34,16 @@ function App() {
 		setLineups(lineups.filter(ilineup => ilineup.id !== id));
 		setUpdatedIDs(false);
 	}
+	const resetLineup = (id) => {
+		setAllPlayers(allPlayers.map(iplayer => {
+			if (id === -1 || iplayer.lineup === id) {
+				return { ...iplayer, lineup: 0, position: "" }
+			}
+			return iplayer;
+		}));
+		//setLineups(lineups.filter(ilineup => ilineup.id !== id));
+		setUpdatedIDs(false);
+	}
 
 	const updateLineupsID = () => {
 		if(!updatedIDs) {
@@ -59,21 +69,70 @@ function App() {
 
 	useEffect(() => {
 		updateLineupsID();
+		// eslint-disable-next-line
 	}, [lineups])
 
-  return (
+	//#region MYSQL
+	function FetchItems(command) {
+		console.log(command)
+
+		fetch('http://www.sokos.sk/florbaldca2/servis/function/database_rn.php', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({            
+				command: command,
+			})
+		})
+		.then(response => response.json())
+			.then(responseJSON => {
+				//console.log(responseJSON);
+				let tmp = [];
+				responseJSON.map(obj => tmp.push({
+					id: obj.id,
+					name: obj.name,
+					number: obj.id,
+					lineup: 0,
+					position: "",
+				}));
+				//console.log(responseJSON);
+				setAllPlayers(tmp);
+			})
+		.catch(err => {
+			console.log("Failure: " + err);
+		})
+	}
+
+	const comm = "SELECT nID AS number, nID AS id, sName AS name, sLastName" +
+				 " FROM ssfb_vsplayers" +
+				 " WHERE nIDSeason='8' AND nIDVSTeam='1'";
+
+	useEffect(() => {
+		console.log(allPlayers);
+	}, [allPlayers])
+	//#endregion
+
+	return (
 		<div className="App">
 			<header>
 				<h1>Zostavy</h1>
+				<button onClick={() => FetchItems(comm)}>Click on me</button>
 			</header>
 
 			<div className="wrapper">
-					<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers} lineupID={0} title="Hraci" position="" />
+					<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+						   lineupID={0}
+						   title="Hraci" position="" />
 
 					<div>
 						<div className="div-nav">
 							<button onClick={addLineup}>
 								<img alt="add" src={require('./images/add.png')} />
+							</button>
+							<button onClick={() => resetLineup(-1)}>
+								<img alt="reset" src={require('./images/reset.png')} />
 							</button>
 						{
 						//	<button onClick={deleteLineup} className={`${lineups.length > 1 ? "" : "hide"}`}>
@@ -82,13 +141,15 @@ function App() {
 						}
 						</div>
 
+						<div className="div-board">
 						{
 							lineups.map((ilineup, index) => (
 								<Lineup key={index} allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-																		lineups={lineups} setLineups={setLineups} deleteLineup={deleteLineup}
-																		lineupID={index} lineupMax={lineups.length - 1} />
+										lineups={lineups} setLineups={setLineups} deleteLineup={deleteLineup} resetLineup={resetLineup}
+										lineupID={index} lineupMax={lineups.length - 1} />
 							))
 						}
+						</div>
 					</div>
 			</div>
     </div>
