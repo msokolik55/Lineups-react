@@ -12,11 +12,9 @@ h5 {
 }
 
 body {
-  /* background-image: url("./images/bg_flrbl_pitch.jpg"); */
   background-image: url("./images/pozadie2_opacity2.png");
   background-color: #004080;
   background-repeat: repeat-y;
-  /* background-size: 100% auto; */
 }
 
 header {
@@ -57,7 +55,7 @@ img {
 
 /* LINEUP */
 .div-lineup {
-  min-height: 50vh;
+  /* min-height: 50vh; */
   padding-top: 10px;
   margin-bottom: 10px;
   background-image: url("./images/flrbl_pitch.png");
@@ -76,13 +74,14 @@ img {
   margin: 0px 10px 0px 10px;
   min-width: 20vh;
   border-radius: 5px;
-  color: white;
+  /* color: white;*/
   overflow-y: auto;
   height: 80vh;
 }
 
 .div-board-title {
   background-color: navy;
+  color: white;
   padding: 10px 0px 10px 0px;
 }
 

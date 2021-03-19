@@ -7,7 +7,7 @@ import Board from './components/Board'
 
 function App() {
 	const [allPlayers, setAllPlayers] = useState([
-    { id: 0, name: "Michal", number: 5, lineup: 0, position: "" },
+    { id: 0, name: "Michal", number: 5, lineup: 0, position: "goalkeeper" },
 		{ id: 1, name: "Jozef", number: 9, lineup: 0, position: "" },
 		{ id: 2, name: "Martin", number: 8, lineup: 0, position: "" },
 		{ id: 3, name: "Peter", number: 6, lineup: 0, position: "" },
@@ -107,50 +107,53 @@ function App() {
 
 	const comm = "SELECT nID AS number, nID AS id, sName AS name, sLastName" +
 				 " FROM ssfb_vsplayers" +
-				 " WHERE nIDSeason='8' AND nIDVSTeam='1'";
-
-	useEffect(() => {
-		console.log(allPlayers);
-	}, [allPlayers])
+				 " WHERE nIDSeason='8' AND nIDVSTeam='1'" +
+				 " LIMIT 20";
 	//#endregion
 
 	return (
-		<div className="App">
-			<header>
+		<div className="container-fluid">
+			<div className="row text-center text-light">
 				<h1>Zostavy</h1>
-				<button onClick={() => FetchItems(comm)}>Click on me</button>
-			</header>
-
-			<div className="wrapper">
-					<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-						   lineupID={0}
-						   title="Hraci" position="" />
-
-					<div>
-						<div className="div-nav">
-							<button onClick={addLineup}>
-								<img alt="add" src={require('./images/add.png')} />
-							</button>
-							<button onClick={() => resetLineup(-1)}>
-								<img alt="reset" src={require('./images/reset.png')} />
-							</button>
-						{
-						//	<button onClick={deleteLineup} className={`${lineups.length > 1 ? "" : "hide"}`}>
-						//		<img alt="delete" src={require('./images/delete.png')} />
-						//	</button>
-						}
-						</div>
-
-						<div className="div-board">
-						{
-							lineups.map((ilineup, index) => (
-								<Lineup key={index} allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-										lineups={lineups} setLineups={setLineups} deleteLineup={deleteLineup} resetLineup={resetLineup}
-										lineupID={index} lineupMax={lineups.length - 1} />
-							))
-						}
-						</div>
+				
+				<div className="row">
+					<div className="col">
+						<button
+							className="btn btn-outline-light"
+							onClick={() => FetchItems(comm)}
+							>
+							Fetch from DB
+						</button>
 					</div>
+					<div className="col text-end">
+						<button
+							className="btn btn-success btn-sm"
+							onClick={addLineup}>
+							<img alt="add" src={require('./images/add.png')} />
+						</button>
+						<button
+							className="btn btn-warning btn-sm"
+							onClick={() => resetLineup(-1)}>
+							<img alt="reset" src={require('./images/reset.png')} />
+						</button>
+					</div>
+				</div>
+			</div>
+			
+			<div className="row mh-50 overflow-auto" style={{height: "63vh"}}>
+			{
+				lineups.map((ilineup, index) => (
+					<Lineup key={index} allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+							lineups={lineups} setLineups={setLineups} deleteLineup={deleteLineup} resetLineup={resetLineup}
+							lineupID={index} lineupMax={lineups.length - 1} />
+				))
+			}
+			</div>
+
+			<div className="row">
+				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+						lineupID={0}
+						title="Hraci" position="" />
 			</div>
     </div>
   );
