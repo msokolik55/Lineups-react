@@ -5,6 +5,10 @@ import './App.css';
 import Lineup from './components/Lineup'
 import Board from './components/Board'
 
+// DnD
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+
 function App() {
 	const [allPlayers, setAllPlayers] = useState([
     { id: 0, name: "Michal", number: 5, lineup: 0, position: "goalkeeper" },
@@ -140,21 +144,23 @@ function App() {
 				</div>
 			</div>
 			
-			<div className="row mh-50 overflow-auto" style={{height: "63vh"}}>
-			{
-				lineups.map((ilineup, index) => (
-					<Lineup key={index} allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-							lineups={lineups} setLineups={setLineups} deleteLineup={deleteLineup} resetLineup={resetLineup}
-							lineupID={index} lineupMax={lineups.length - 1} />
-				))
-			}
-			</div>
+			<DndProvider backend={HTML5Backend}>
+				<div className="row mh-50 overflow-auto" style={{height: "63vh"}}>
+				{
+					lineups.map((ilineup, index) => (
+						<Lineup key={index} allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+								lineups={lineups} setLineups={setLineups} deleteLineup={deleteLineup} resetLineup={resetLineup}
+								lineupID={index} lineupMax={lineups.length - 1} />
+					))
+				}
+				</div>
 
-			<div className="row">
-				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-						lineupID={0}
-						title="Hraci" position="" />
-			</div>
+				<div className="row">
+					<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+							lineupID={0}
+							title="Hraci" position="" />
+				</div>
+			</DndProvider>
     </div>
   );
 }

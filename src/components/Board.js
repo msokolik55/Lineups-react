@@ -3,8 +3,12 @@ import React from "react";
 // Components
 import Player from "./Player";
 
+import { ItemTypes } from '../Constants'
+import { useDrop } from 'react-dnd'
+
 const Board = (props) => {
 
+	/* 
 	const drop = (e) => {
 		if (props.position !== "" && props.allPlayers
 			.filter(player => player.lineup === props.lineupID &&
@@ -33,14 +37,46 @@ const Board = (props) => {
 	const dragOver = (e) => {
 		e.preventDefault();
 	}
+	*/
+
+	const [{ isOver, player }, drop] = useDrop(() => ({
+		accept: ItemTypes.PLAYER,
+		drop: () => {
+			console.log(player);
+			
+			if (props.position !== "" && props.allPlayers
+				.filter(player => player.lineup === props.lineupID &&
+						player.position === props.position)
+				.length >= 1)
+						return;
+			
+			//const player_id = e.dataTransfer.getData('player_id');
+
+			props.setAllPlayers(
+				props.allPlayers
+					.map(iplayer => {
+					//if(iplayer.id === Number(player_id)) {
+					//	return { ...iplayer, lineup: props.lineupID, position: props.position };
+					//}
+					return iplayer;
+					})
+			)
+
+		},
+		collect: monitor => ({
+			isOver: !!monitor.isOver(),
+			player: monitor.getItem(),
+		}),
+	}))
 
 	return (
 
 		<div
 			id={props.title}
 			className={"container text-center"}
-			onDrop={drop}
-			onDragOver={dragOver}
+			ref={drop}
+			/* onDrop={drop}
+			onDragOver={dragOver} */
 			>
 
 			<div className="row bg-primary text-light p-2">
