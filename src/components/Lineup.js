@@ -3,21 +3,17 @@ import React from 'react';
 // Components
 import Board from './Board'
 
-const Lineup = ({
-		allPlayers, setAllPlayers,
-		lineups, setLineups, deleteLineup, resetLineup,
-		lineupID, lineupMax
-	}) => {
+const Lineup = (props) => {
 
-	const deleteThis = () => deleteLineup(lineupID);
-	const resetThis = () => resetLineup(lineupID);
+	const deleteThis = () => props.deleteLineup(props.lineupID);
+	const resetThis = () => props.resetLineup(props.lineupID);
 
 	return (
-		<div id={`lineup-${lineupID}`} className="mh-70 my-3 container bg-dark py-3">
+		<div id={`lineup-${props.lineupID}`} className="mh-70 my-3 container bg-dark py-3">
 			<div className="container-fluid text-center text-light">
 				<div className="row">
 					<div className="col text-start">
-						<h3>Zostava {lineupID + 1}</h3>
+						<h3>Zostava {props.lineupID + 1}</h3>
 					</div>
 					<div className="col text-end">
 					<button
@@ -26,7 +22,7 @@ const Lineup = ({
 						<img alt="reset" src={require('../images/reset.png')} />
 					</button>
 					<button
-						onClick={deleteThis} className={`btn btn-danger btn-sm ${lineups.length > 1 ? "" : "hide"}`}>
+						onClick={deleteThis} className={`btn btn-danger btn-sm ${props.lineups.length > 1 ? "" : "hide"}`}>
 						<img alt="delete" src={require('../images/delete.png')} />
 					</button>
 					</div>
@@ -36,44 +32,50 @@ const Lineup = ({
 			<div className="container-fluid">				
 				<div className="row my-1">
 					<div className="col">
-						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-							lineupID={lineupID} lineupMax={lineupMax}
-							title="L. utocnik" position="left-attacker" />
+						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
+							lineupID={props.lineupID} lineupMax={props.lineupMax}
+							title="L. utocnik" position="left-attacker"
+							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
 					</div>
 					<div className="col">
-						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-							lineupID={lineupID} lineupMax={lineupMax}
-							title="P. utocnik" position="right-attacker" />
-					</div>
-				</div>
-				
-				<div className="row my-1">
-					<div className="col">
-						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-							lineupID={lineupID} lineupMax={lineupMax}
-							title="Center" position="center" />
+						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
+							lineupID={props.lineupID} lineupMax={props.lineupMax}
+							title="P. utocnik" position="right-attacker"
+							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
 					</div>
 				</div>
 				
 				<div className="row my-1">
 					<div className="col">
-						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-							lineupID={lineupID} lineupMax={lineupMax}
-							title="L. obranca" position="left-defender" />
+						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
+							lineupID={props.lineupID} lineupMax={props.lineupMax}
+							title="Center" position="center"
+							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
+					</div>
+				</div>
+				
+				<div className="row my-1">
+					<div className="col">
+						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
+							lineupID={props.lineupID} lineupMax={props.lineupMax}
+							title="L. obranca" position="left-defender"
+							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
 					</div>
 
 					<div className="col">
-						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-							lineupID={lineupID} lineupMax={lineupMax}
-							title="P. obranca" position="right-defender" />
+						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
+							lineupID={props.lineupID} lineupMax={props.lineupMax}
+							title="P. obranca" position="right-defender"
+							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
 					</div>
 				</div>
 				
 				<div className="row my-1">
 					<div className="col">
-						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-							lineupID={lineupID} lineupMax={lineupMax}
-							title="Brankar" position="goalkeeper" />
+						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
+							lineupID={props.lineupID} lineupMax={props.lineupMax}
+							title="Brankar" position="goalkeeper"
+							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
 					</div>
 				</div>
 			</div>

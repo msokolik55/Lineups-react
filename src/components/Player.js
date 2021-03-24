@@ -11,6 +11,11 @@ const Player = (props) => {
 		e.stopPropagation();
 	}
 
+	const handleClick = (e) => {
+		const target = e.target;
+		props.setSelectedPlayer(Number(target.id));
+	}
+
 	return (
 		<div
 			id={props.player.id}
@@ -18,8 +23,15 @@ const Player = (props) => {
 			draggable
 			onDragStart={dragStart}
 			onDragOver={dragOver}
+			onClick={handleClick}
+			style={{ pointerEvents: 'visible' }}
 			>
-			<div className="card">
+			<div
+				className="card"
+				style={{
+					pointerEvents: 'none',
+					backgroundColor: props.player.id === props.selectedPlayer ? 'red' : '',
+				}}>
 				<div className="div-player-row">
 					<div className="div-player-jersey">
 						<h2>{props.player.number}</h2>

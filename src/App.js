@@ -96,6 +96,7 @@ function App() {
 					number: obj.id,
 					lineup: 0,
 					position: "",
+					selected: false,
 				}));
 				//console.log(responseJSON);
 				setAllPlayers(tmp);
@@ -110,6 +111,8 @@ function App() {
 				 " WHERE nIDSeason='8' AND nIDVSTeam='1'" +
 				 " LIMIT 20";
 	//#endregion
+
+	const [selectedPlayer, setSelectedPlayer] = useState(null);
 
 	return (
 		<div className="container-fluid">
@@ -145,7 +148,8 @@ function App() {
 				lineups.map((ilineup, index) => (
 					<Lineup key={index} allPlayers={allPlayers} setAllPlayers={setAllPlayers}
 							lineups={lineups} setLineups={setLineups} deleteLineup={deleteLineup} resetLineup={resetLineup}
-							lineupID={index} lineupMax={lineups.length - 1} />
+							lineupID={index} lineupMax={lineups.length - 1}
+							selectedPlayer={selectedPlayer} setSelectedPlayer={setSelectedPlayer} />
 				))
 			}
 			</div>
@@ -153,7 +157,8 @@ function App() {
 			<div className="row">
 				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
 						lineupID={0}
-						title="Hraci" position="" />
+						title="Hraci" position=""
+						selectedPlayer={selectedPlayer} setSelectedPlayer={setSelectedPlayer} />
 			</div>
     </div>
   );
