@@ -38,29 +38,31 @@ const Board = (props) => {
 
 		<div
 			id={props.title}
-			className={`div-board ${props.position !== "" ? "div-board-lineup" : ""}`}
+			className={"container text-center"}
 			onDrop={drop}
 			onDragOver={dragOver}
 			>
 
-			<div className="div-board-title">
-				<h3>{props.title}</h3>
+			<div className="row bg-primary text-light p-2">
+				<h3 className="mb-0">{props.title}</h3>
 			</div>
-			<div className="div-board-players">
-			{
-					props.allPlayers
-						.filter(player => player.lineup === props.lineupID && player.position === props.position)
-						.map((player) => (
-							<Player
-								id={player.number}
-								key={player.number}
-								player={player}
-								allPlayers={props.allPlayers}
-								setAllPlayers={props.setAllPlayers}
-								lineupMax={props.lineupMax}/>
-						)
-						)
-			}
+			<div className="row bg-light">
+				<div className="card-group flex-nowrap overflow-auto">
+				{
+						props.allPlayers
+							.filter(player => player.lineup === props.lineupID && player.position === props.position)
+							.map((player) => (
+								<Player
+									id={player.number}
+									key={player.number}
+									player={player}
+									allPlayers={props.allPlayers}
+									setAllPlayers={props.setAllPlayers}
+									lineupMax={props.lineupMax}/>
+							)
+							)
+				}
+				</div>
 			</div>
 		</div>
 	)

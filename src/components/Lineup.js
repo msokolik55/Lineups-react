@@ -13,37 +13,69 @@ const Lineup = ({
 	const resetThis = () => resetLineup(lineupID);
 
 	return (
-		<div id={`lineup-${lineupID}`} className="div-lineup">
-			<div className="div-row div-nav">
-				<h3>Zostava {lineupID + 1}</h3>
-				<button onClick={resetThis} className={`${lineups.length > 1 ? "" : "hide"}`}>
-					<img alt="reset" src={require('../images/reset.png')} />
-				</button>
-				<button onClick={deleteThis} className={`${lineups.length > 1 ? "" : "hide"}`}>
-					<img alt="delete" src={require('../images/delete.png')} />
-				</button>
+		<div id={`lineup-${lineupID}`} className="mh-70 my-3 container bg-dark py-3">
+			<div className="container-fluid text-center text-light">
+				<div className="row">
+					<div className="col text-start">
+						<h3>Zostava {lineupID + 1}</h3>
+					</div>
+					<div className="col text-end">
+					<button
+						className="btn btn-warning btn-sm"
+						onClick={resetThis}>
+						<img alt="reset" src={require('../images/reset.png')} />
+					</button>
+					<button
+						onClick={deleteThis} className={`btn btn-danger btn-sm ${lineups.length > 1 ? "" : "hide"}`}>
+						<img alt="delete" src={require('../images/delete.png')} />
+					</button>
+					</div>
+				</div>
 			</div>
 
-			<div className="div-lineup-boards">
-				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-					lineupID={lineupID} lineupMax={lineupMax}
-					title="Brankari" position="goalkeeper" />
+			<div className="container-fluid">				
+				<div className="row my-1">
+					<div className="col">
+						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+							lineupID={lineupID} lineupMax={lineupMax}
+							title="L. utocnik" position="left-attacker" />
+					</div>
+					<div className="col">
+						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+							lineupID={lineupID} lineupMax={lineupMax}
+							title="P. utocnik" position="right-attacker" />
+					</div>
+				</div>
+				
+				<div className="row my-1">
+					<div className="col">
+						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+							lineupID={lineupID} lineupMax={lineupMax}
+							title="Center" position="center" />
+					</div>
+				</div>
+				
+				<div className="row my-1">
+					<div className="col">
+						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+							lineupID={lineupID} lineupMax={lineupMax}
+							title="L. obranca" position="left-defender" />
+					</div>
 
-				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-					lineupID={lineupID} lineupMax={lineupMax}
-					title="Obrancovia" position="defender" />
-
-				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-					lineupID={lineupID} lineupMax={lineupMax}
-					title="Utocnici" position="attacker" />
-
-				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-					lineupID={lineupID} lineupMax={lineupMax}
-					title="Utocnici" position="attacker2" />
-
-				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-					lineupID={lineupID} lineupMax={lineupMax}
-					title="Utocnici" position="attacker3" />
+					<div className="col">
+						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+							lineupID={lineupID} lineupMax={lineupMax}
+							title="P. obranca" position="right-defender" />
+					</div>
+				</div>
+				
+				<div className="row my-1">
+					<div className="col">
+						<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+							lineupID={lineupID} lineupMax={lineupMax}
+							title="Brankar" position="goalkeeper" />
+					</div>
+				</div>
 			</div>
 		</div>
 	)
