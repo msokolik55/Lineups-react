@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Components
 import Board from './Board'
@@ -8,12 +8,59 @@ const Lineup = (props) => {
 	const deleteThis = () => props.deleteLineup(props.lineupID);
 	const resetThis = () => props.resetLineup(props.lineupID);
 
+	const options = {
+		"2-1-2": [0, 1, 2, 3],
+		"2-2-1": [1, 0, 2, 3],
+	}
+
+	const renderBoard = (title, positionName) => {
+		return (
+			<div className="col">
+				<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
+					lineupID={props.lineupID} lineupMax={props.lineupMax}
+					title={title} position={positionName}
+					selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
+			</div>
+		)
+	}
+
+	const boards = [
+		<div className="row my-1">
+			{renderBoard("L. utocnik", "position_1")}
+			{renderBoard("P. utocnik", "position_2")}
+		</div>,
+		<div className="row my-1">
+			{renderBoard("Center", "position_3")}
+		</div>,
+		<div className="row my-1">
+			{renderBoard("L. obranca", "position_4")}
+			{renderBoard("P. obranca", "position_5")}
+		</div>,
+		<div className="row my-1">
+			{renderBoard("Brankar", "position_0")}
+		</div>,
+	]
+
+	const [order, setOrder] = useState(options["2-1-2"]);
+	const handleChange = (e) => setOrder(options[e.target.value])
+
 	return (
 		<div id={`lineup-${props.lineupID}`} className="mh-70 my-3 container bg-dark py-3">
+			{/* #region Header */}
 			<div className="container-fluid text-center text-light">
 				<div className="row">
 					<div className="col text-start">
-						<h3>Zostava {props.lineupID + 1}</h3>
+						<h3>Zostava {props.lineupID + 1}</h3>						
+					</div>
+					<div className="col text-start">
+						<label>Formácia:</label>
+						<select name="formations" onChange={(e) => handleChange(e)}>
+							{
+								Object.entries(options).map(([key, _], i) => (									
+									<option key={i} value={key}>{key}</option>
+								))
+							}
+						</select>
 					</div>
 					<div className="col text-end">
 					<button
@@ -29,55 +76,12 @@ const Lineup = (props) => {
 				</div>
 			</div>
 
-			<div className="container-fluid">				
-				<div className="row my-1">
-					<div className="col">
-						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
-							lineupID={props.lineupID} lineupMax={props.lineupMax}
-							title="L. utocnik" position="left-attacker"
-							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
-					</div>
-					<div className="col">
-						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
-							lineupID={props.lineupID} lineupMax={props.lineupMax}
-							title="P. utocnik" position="right-attacker"
-							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
-					</div>
-				</div>
-				
-				<div className="row my-1">
-					<div className="col">
-						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
-							lineupID={props.lineupID} lineupMax={props.lineupMax}
-							title="Center" position="center"
-							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
-					</div>
-				</div>
-				
-				<div className="row my-1">
-					<div className="col">
-						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
-							lineupID={props.lineupID} lineupMax={props.lineupMax}
-							title="L. obranca" position="left-defender"
-							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
-					</div>
-
-					<div className="col">
-						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
-							lineupID={props.lineupID} lineupMax={props.lineupMax}
-							title="P. obranca" position="right-defender"
-							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
-					</div>
-				</div>
-				
-				<div className="row my-1">
-					<div className="col">
-						<Board allPlayers={props.allPlayers} setAllPlayers={props.setAllPlayers}
-							lineupID={props.lineupID} lineupMax={props.lineupMax}
-							title="Brankar" position="goalkeeper"
-							selectedPlayer={props.selectedPlayer} setSelectedPlayer={props.setSelectedPlayer} />
-					</div>
-				</div>
+			{/* #region Boards */}
+			<div className="container-fluid">
+				{boards[order[0]]}
+				{boards[order[1]]}
+				{boards[order[2]]}
+				{boards[order[3]]}
 			</div>
 		</div>
 	)

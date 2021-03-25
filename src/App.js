@@ -7,7 +7,7 @@ import Board from './components/Board'
 
 function App() {
 	const [allPlayers, setAllPlayers] = useState([
-    { id: 0, name: "Michal", number: 5, lineup: 0, position: "goalkeeper" },
+    { id: 0, name: "Michal", number: 5, lineup: 0, position: "" },
 		{ id: 1, name: "Jozef", number: 9, lineup: 0, position: "" },
 		{ id: 2, name: "Martin", number: 8, lineup: 0, position: "" },
 		{ id: 3, name: "Peter", number: 6, lineup: 0, position: "" },
