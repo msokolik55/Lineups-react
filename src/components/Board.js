@@ -6,28 +6,33 @@ import Player from "./Player";
 const Board = (props) => {
 
 	const drop = (e) => {
-		if (props.position !== "" && props.allPlayers
-			.filter(player => player.lineup === props.lineupID &&
-					player.position === props.position)
-			.length >= 1)
-					return;
-		
 		e.preventDefault();
+		
+		let playersOnBoard = props.allPlayers
+			.filter(player => player.lineup === props.lineupID &&
+							  player.position === props.position);		
+							  
 		const player_id = e.dataTransfer.getData('player_id');
+		let playerToMove = props.allPlayers.filter(iplayer => iplayer.id === Number(player_id))[0];
 
-		//const player = document.getElementById(player_id);
-		//player.style.display = 'block';
-		//e.target.appendChild(player);
+		props.setAllPlayers(props.allPlayers
+			.map(iplayer => {
+				if(playersOnBoard.length >= 1 &&
+					iplayer.id === playersOnBoard[0].id &&
+					props.position !== "") {
+					return { ...iplayer, lineup: playerToMove.lineup, position: playerToMove.position };						
+				}					
 
-		props.setAllPlayers(
-			props.allPlayers
-				.map(iplayer => {
 				if(iplayer.id === Number(player_id)) {
 					return { ...iplayer, lineup: props.lineupID, position: props.position };
 				}
+				
 				return iplayer;
 			})
 		)
+		
+		props.setSelectedPlayer(null);
+
 	}
 
 	const dragOver = (e) => {
@@ -37,19 +42,25 @@ const Board = (props) => {
 	const clickHandle = () => {
 		if (props.selectedPlayer === null) return;
 
-		if (props.position !== "" && props.allPlayers
+		let playersOnBoard = props.allPlayers
 			.filter(player => player.lineup === props.lineupID &&
-					player.position === props.position)
-			.length >= 1)
-					return;
-
+							  player.position === props.position);
 		
-		props.setAllPlayers(
-			props.allPlayers
-				.map(iplayer => {
-					if(iplayer.id === props.selectedPlayer) {
-						return { ...iplayer, lineup: props.lineupID, position: props.position };
-					}
+		let playerToMove = props.allPlayers.filter(iplayer => iplayer.id === props.selectedPlayer)[0];
+		
+		props.setAllPlayers(props.allPlayers
+			.map(iplayer => {
+				if(playersOnBoard.length >= 1 &&
+					iplayer.id === playersOnBoard[0].id &&
+					props.position !== "") {
+					return { ...iplayer, lineup: playerToMove.lineup, position: playerToMove.position };						
+				}
+					
+
+				if(iplayer.id === props.selectedPlayer) {
+					return { ...iplayer, lineup: props.lineupID, position: props.position };
+				}
+				
 				return iplayer;
 			})
 		)
