@@ -73,49 +73,52 @@ function App() {
 	}, [lineups])
 
 	//#region MYSQL
-	function FetchItems(command) {
-		console.log(command)
+	// function FetchItems(command) {
+	// 	console.log(command)
 
-		fetch('http://www.sokos.sk/florbaldca2/servis/function/database_rn.php', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({            
-				command: command,
-			})
-		})
-		.then(response => response.json())
-			.then(responseJSON => {
-				//console.log(responseJSON);
-				let tmp = [];
-				responseJSON.map(obj => tmp.push({
-					id: obj.id,
-					name: obj.name,
-					number: obj.id,
-					lineup: 0,
-					position: "",
-					selected: false,
-				}));
-				//console.log(responseJSON);
-				setAllPlayers(tmp);
-			})
-		.catch(err => {
-			console.log("Failure: " + err);
-		})
-	}
+	// 	fetch('http://www.sokos.sk/florbaldca2/servis/function/database_rn.php', {
+	// 		method: 'POST',
+	// 		headers: {
+	// 			'Accept': 'application/json',
+	// 			'Content-Type': 'application/json',
+	// 		},
+	// 		body: JSON.stringify({            
+	// 			command: command,
+	// 		})
+	// 	})
+	// 	.then(response => response.json())
+	// 		.then(responseJSON => {
+	// 			//console.log(responseJSON);
+	// 			let tmp = [];
+	// 			responseJSON.map(obj => tmp.push({
+	// 				id: obj.id,
+	// 				name: obj.name,
+	// 				number: obj.id,
+	// 				lineup: 0,
+	// 				position: "",
+	// 				selected: false,
+	// 			}));
+	// 			//console.log(responseJSON);
+	// 			setAllPlayers(tmp);
+	// 		})
+	// 	.catch(err => {
+	// 		console.log("Failure: " + err);
+	// 	})
+	// }
 
-	const comm = "SELECT nID AS number, nID AS id, sName AS name, sLastName" +
-				 " FROM ssfb_vsplayers" +
-				 " WHERE nIDSeason='8' AND nIDVSTeam='1'" +
-				 " LIMIT 20";
+	// const comm = "SELECT nID AS number, nID AS id, sName AS name, sLastName" +
+	// 			 " FROM ssfb_vsplayers" +
+	// 			 " WHERE nIDSeason='8' AND nIDVSTeam='1'" +
+	// 			 " LIMIT 20";
 	//#endregion
 
 	const [selectedPlayer, setSelectedPlayer] = useState(null);
+	const deletePlayer = () => {
+		setAllPlayers(allPlayers.filter(iplayer => iplayer.id !== selectedPlayer));
+		setSelectedPlayer(null);
+	}
 
 	const [menuAddPlayer, setMenuAddPlayer] = useState(false);
-	
 	const playerName = useRef(null);
 	const playerNumber = useRef(null);
 
@@ -125,14 +128,14 @@ function App() {
 				<h1>Zostavy</h1>
 				
 				<div className="row">
-					<div className="col">
+					{/* <div className="col">
 						<button
 							className="btn btn-outline-light"
 							onClick={() => FetchItems(comm)}
 							>
 							Fetch from DB
 						</button>
-					</div>
+					</div> */}
 					<div className="col text-end">
 						<button
 							className="btn btn-success btn-sm"
@@ -160,11 +163,30 @@ function App() {
 			</div>
 
 			<div className="row">
-				<button className="btn btn-secondary" onClick={() => setMenuAddPlayer(true)}>Add player</button>
-				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
-						lineupID={0}
-						title="Hraci" position=""
-						selectedPlayer={selectedPlayer} setSelectedPlayer={setSelectedPlayer} />
+				<div className="col-11">
+					<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+							lineupID={0}
+							title="Hraci" position=""
+							selectedPlayer={selectedPlayer} setSelectedPlayer={setSelectedPlayer} />
+				</div>
+				<div className="col-1" style={{ display: 'flex', alignItems: 'center' }}>
+					<div className="container">
+						<div className="row">
+							<div className="col">
+								<button className="btn btn-success btn-sm" onClick={() => setMenuAddPlayer(true)}>
+									<img alt="add" src={require('./images/add.png')} />
+								</button>
+							</div>
+						</div>
+						<div className="row">
+							<div className="col">
+								<button className="btn btn-danger btn-sm" onClick={() => deletePlayer()}>
+									<img alt="add" src={require('./images/delete.png')} />
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			{//#region MENU Add player
@@ -185,9 +207,13 @@ function App() {
 					height: '90%',
 					zIndex: 1,
 					}}>
-					<button className="btn btn-secondary" onClick={() => setMenuAddPlayer(false)}>X</button>
+					<div className="row mb-3">
+						<div className="col">
+							<button className="btn btn-secondary" onClick={() => setMenuAddPlayer(false)}>X</button>
+						</div>
+					</div>
 					<div className="row">
-						<div className="input-group mb-3">
+						<div className="input-group mb-1">
 							<div className="input-group-prepend">
 								<span className="input-group-text" id="player-number">#</span>
 							</div>
@@ -200,7 +226,7 @@ function App() {
 						</div>
 					</div>
 					<div className="row">
-						<div className="input-group mb-3">
+						<div className="input-group mb-1">
 							<div className="input-group-prepend">
 								<span className="input-group-text" id="player-name">Meno</span>
 							</div>
