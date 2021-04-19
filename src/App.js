@@ -119,8 +119,12 @@ function App() {
 	}
 
 	const [menuAddPlayer, setMenuAddPlayer] = useState(false);
-	const playerName = useRef(null);
-	const playerNumber = useRef(null);
+	const playerAddName = useRef(null);
+	const playerAddNumber = useRef(null);
+	
+	const [menuEditPlayer, setMenuEditPlayer] = useState(false);
+	const playerEditName = useRef(null);
+	const playerEditNumber = useRef(null);	
 
 	return (
 		<div className="container-fluid">
@@ -180,8 +184,22 @@ function App() {
 						</div>
 						<div className="row">
 							<div className="col">
+								<button className="btn btn-warning btn-sm" onClick={() => {
+									if (selectedPlayer !== null) {
+										let player = allPlayers.filter(iplayer => iplayer.id === selectedPlayer)[0];
+										playerEditNumber.current.value = player.number;
+										playerEditName.current.value = player.name;
+										setMenuEditPlayer(true);										
+									}
+									}}>
+									<img alt="edit" src={require('./images/reset.png')} />
+								</button>
+							</div>
+						</div>
+						<div className="row">
+							<div className="col">
 								<button className="btn btn-danger btn-sm" onClick={() => deletePlayer()}>
-									<img alt="add" src={require('./images/delete.png')} />
+									<img alt="delete" src={require('./images/delete.png')} />
 								</button>
 							</div>
 						</div>
@@ -221,7 +239,7 @@ function App() {
 								className="form-control"
 								aria-label="Number"
 								aria-describedby="player-number"
-								ref={playerNumber}
+								ref={playerAddNumber}
 								/>
 						</div>
 					</div>
@@ -234,24 +252,92 @@ function App() {
 								className="form-control"
 								aria-label="Name"
 								aria-describedby="player-name"
-								ref={playerName}
+								ref={playerAddName}
 								/>
 						</div>
 					</div>
 					<button className="btn btn-secondary" onClick={() => {
-						let number = Number(playerNumber.current.value);
-						let name = playerName.current.value;
+						let number = Number(playerAddNumber.current.value);
+						let name = playerAddName.current.value;
 						
 						if (name.length > 0)
 						{
 							setAllPlayers([...allPlayers, {
 								id: allPlayers.length, number: number, name: name, lineup: 0, position: ""
 							}]);
-							playerName.current.value = "";
-							playerNumber.current.value = "";
+							playerAddName.current.value = "";
+							playerAddNumber.current.value = "";
 							setMenuAddPlayer(false);
 						}
 						}}>+</button>
+				</div>
+			</div>
+			
+			{//#region MENU Edit player
+			}
+			<div className="container mw-100" style={{
+					position: 'fixed',
+					backgroundColor: "hsl(0deg 0% 100% / 50%)",
+					left: 0,
+					right: 0,
+					top: 0,
+					bottom: 0,
+					zIndex: 1,
+					display: menuEditPlayer ? 'block' : 'none',
+			 	}}>
+				<div className="container" style={{
+					backgroundColor: 'red',
+					marginTop: '1rem',
+					height: '90%',
+					zIndex: 1,
+					}}>
+					<div className="row mb-3">
+						<div className="col">
+							<button className="btn btn-secondary" onClick={() => setMenuEditPlayer(false)}>X</button>
+						</div>
+					</div>
+					<div className="row">
+						<div className="input-group mb-1">
+							<div className="input-group-prepend">
+								<span className="input-group-text" id="player-number">#</span>
+							</div>
+							<input type="number" min="0" max="99"
+								className="form-control"
+								aria-label="Number"
+								aria-describedby="player-number"
+								ref={playerEditNumber}
+								/>
+						</div>
+					</div>
+					<div className="row">
+						<div className="input-group mb-1">
+							<div className="input-group-prepend">
+								<span className="input-group-text" id="player-name">Meno</span>
+							</div>
+							<input type="text"
+								className="form-control"
+								aria-label="Name"
+								aria-describedby="player-name"
+								ref={playerEditName}
+								/>
+						</div>
+					</div>
+					<button className="btn btn-secondary" onClick={() => {
+						let number = Number(playerEditNumber.current.value);
+						let name = playerEditName.current.value;
+						
+						if (name.length > 0)
+						{
+							setAllPlayers(allPlayers.map((iplayer) => {
+								if (iplayer.id === selectedPlayer) {
+									return { ...iplayer, number: number, name: name };
+								}
+								return iplayer;
+							}));
+							setMenuEditPlayer(false);
+							setSelectedPlayer(null);
+						}
+						}}>Ulož</button>
 				</div>
 			</div>
 		</div>
