@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 // Components
@@ -114,6 +114,11 @@ function App() {
 
 	const [selectedPlayer, setSelectedPlayer] = useState(null);
 
+	const [menuAddPlayer, setMenuAddPlayer] = useState(false);
+	
+	const playerName = useRef(null);
+	const playerNumber = useRef(null);
+
 	return (
 		<div className="container-fluid">
 			<div className="row text-center text-light">
@@ -155,13 +160,76 @@ function App() {
 			</div>
 
 			<div className="row">
+				<button className="btn btn-secondary" onClick={() => setMenuAddPlayer(true)}>Add player</button>
 				<Board allPlayers={allPlayers} setAllPlayers={setAllPlayers}
 						lineupID={0}
 						title="Hraci" position=""
 						selectedPlayer={selectedPlayer} setSelectedPlayer={setSelectedPlayer} />
 			</div>
-    </div>
-  );
+
+			{//#region MENU Add player
+			}
+			<div className="container mw-100" style={{
+					position: 'fixed',
+					backgroundColor: "hsl(0deg 0% 100% / 50%)",
+					left: 0,
+					right: 0,
+					top: 0,
+					bottom: 0,
+					zIndex: 1,
+					display: menuAddPlayer ? 'block' : 'none',
+			 	}}>
+				<div className="container" style={{
+					backgroundColor: 'red',
+					marginTop: '1rem',
+					height: '90%',
+					zIndex: 1,
+					}}>
+					<button className="btn btn-secondary" onClick={() => setMenuAddPlayer(false)}>X</button>
+					<div className="row">
+						<div className="input-group mb-3">
+							<div className="input-group-prepend">
+								<span className="input-group-text" id="player-number">#</span>
+							</div>
+							<input type="number" min="0" max="99"
+								className="form-control"
+								aria-label="Number"
+								aria-describedby="player-number"
+								ref={playerNumber}
+								/>
+						</div>
+					</div>
+					<div className="row">
+						<div className="input-group mb-3">
+							<div className="input-group-prepend">
+								<span className="input-group-text" id="player-name">Meno</span>
+							</div>
+							<input type="text"
+								className="form-control"
+								aria-label="Name"
+								aria-describedby="player-name"
+								ref={playerName}
+								/>
+						</div>
+					</div>
+					<button className="btn btn-secondary" onClick={() => {
+						let number = Number(playerNumber.current.value);
+						let name = playerName.current.value;
+						
+						if (name.length > 0)
+						{
+							setAllPlayers([...allPlayers, {
+								id: allPlayers.length, number: number, name: name, lineup: 0, position: ""
+							}]);
+							playerName.current.value = "";
+							playerNumber.current.value = "";
+							setMenuAddPlayer(false);
+						}
+						}}>+</button>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default App;
