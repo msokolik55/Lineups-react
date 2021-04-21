@@ -14,6 +14,7 @@ const actions = {
 function FormPlayer(props) {
 	const fieldName = useRef(null);
 	const fieldNumber = useRef(null);
+	const fieldText = useRef(null);
 
 	useEffect(() => {
 		if (props.selectedPlayer === null || props.action === actions.ADD) {
@@ -77,6 +78,22 @@ function FormPlayer(props) {
 						/>
 					</div>
 				</div>
+				<div className="row">
+					<div className="input-group mb-1">
+						<div className="input-group-prepend">
+							<span className="input-group-text" id="player-name">
+								Hráči [číslo priezvisko meno zvyšok]
+							</span>
+						</div>
+						<textarea
+							type="text"
+							className="form-control"
+							aria-label="Name"
+							aria-describedby="player-name"
+							ref={fieldText}
+						/>
+					</div>
+				</div>
 				<button
 					className="btn btn-secondary"
 					onClick={() => {
@@ -127,6 +144,35 @@ function FormPlayer(props) {
 					}}>
 					{props.action === actions.ADD && "+"}
 					{props.action === actions.EDIT && "ULOŽ"}
+				</button>
+				<button
+					className="btn btn-secondary"
+					onClick={() => {
+						let text = fieldText.current.value;
+						let rawPlayers = text.split("\n");
+						let players = [];
+						rawPlayers.map((iplayer) => {
+							if (iplayer.length > 0) {
+								let [number, surname] = iplayer.split("\t")[0].split(" ");
+								players.push({
+									id: players.length,
+									number: number,
+									name: surname,
+									lineup: 0,
+									position: ""
+								});
+							}
+							return iplayer;
+						});
+
+						fieldName.current.value = "";
+						fieldNumber.current.value = "";
+						fieldText.current.value = "";
+						props.setFormPlayerShow(false);
+						props.setSelectedPlayer(null);
+						props.setAllPlayers(players);
+					}}>
+					Pridaj
 				</button>
 			</div>
 		</div>
