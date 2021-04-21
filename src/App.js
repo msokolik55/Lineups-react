@@ -161,15 +161,26 @@ function FormConfirm(props) {
 }
 
 function App() {
+	const idbKeyval = require("idb-keyval");
+
+	useEffect(() => {
+		idbKeyval.get("players").then((val) => setAllPlayers(val));
+	}, [idbKeyval]);
+
 	const [allPlayers, setAllPlayers] = useState([
-		{ id: 0, name: "Michal", number: 5, lineup: 0, position: "" },
-		{ id: 1, name: "Jozef", number: 9, lineup: 0, position: "" },
-		{ id: 2, name: "Martin", number: 8, lineup: 0, position: "" },
-		{ id: 3, name: "Peter", number: 6, lineup: 0, position: "" },
-		{ id: 4, name: "Anton", number: 4, lineup: 0, position: "" },
-		{ id: 5, name: "Vlado", number: 3, lineup: 0, position: "" },
-		{ id: 6, name: "Roman", number: 1, lineup: 0, position: "" }
+		// { id: 0, name: "Michal", number: 5, lineup: 0, position: "" },
+		// { id: 1, name: "Jozef", number: 9, lineup: 0, position: "" },
+		// { id: 2, name: "Martin", number: 8, lineup: 0, position: "" },
+		// { id: 3, name: "Peter", number: 6, lineup: 0, position: "" },
+		// { id: 4, name: "Anton", number: 4, lineup: 0, position: "" },
+		// { id: 5, name: "Vlado", number: 3, lineup: 0, position: "" },
+		// { id: 6, name: "Roman", number: 1, lineup: 0, position: "" }
 	]);
+
+	useEffect(() => {
+		idbKeyval.set("players", allPlayers);
+	}, [allPlayers, idbKeyval]);
+
 	const [lineups, setLineups] = useState([{ id: 0 }, { id: 1 }]);
 	const [updatedIDs, setUpdatedIDs] = useState(true);
 
