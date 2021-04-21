@@ -5,6 +5,109 @@ import './App.css';
 import Lineup from './components/Lineup'
 import Board from './components/Board'
 
+const actions = {
+	ADD: 0,
+	EDIT: 1,
+}
+
+function FormPlayer(props) {
+	const fieldName = useRef(null);
+	const fieldNumber = useRef(null);
+
+	useEffect(() => {
+		if (props.selectedPlayer === null) return;
+		let player = props.allPlayers.filter(iplayer => iplayer.id === props.selectedPlayer)[0];
+		fieldNumber.current.value = player.number;
+		fieldName.current.value = player.name;
+	}, [props.selectedPlayer, props.allPlayers])
+
+	return <div className="container mw-100" style={{
+				position: 'fixed',
+				backgroundColor: "hsl(0deg 0% 100% / 50%)",
+				left: 0,
+				right: 0,
+				top: 0,
+				bottom: 0,
+				zIndex: 1,
+				display: props.formPlayerShow ? 'block' : 'none',
+				}}>
+				<div className="container" style={{
+					backgroundColor: 'red',
+					marginTop: '1rem',
+					height: '90%',
+					zIndex: 1,
+					}}>
+					<div className="row mb-3">
+						<div className="col">
+							<button className="btn btn-secondary" onClick={() => props.setFormPlayerShow(false)}>X</button>
+						</div>
+					</div>
+					<div className="row">
+						<div className="input-group mb-1">
+							<div className="input-group-prepend">
+								<span className="input-group-text" id="player-number">#</span>
+							</div>
+							<input type="number" min="0" max="99"
+								className="form-control"
+								aria-label="Number"
+								aria-describedby="player-number"
+								ref={fieldNumber}
+								/>
+						</div>
+					</div>
+					<div className="row">
+						<div className="input-group mb-1">
+							<div className="input-group-prepend">
+								<span className="input-group-text" id="player-name">Meno</span>
+							</div>
+							<input type="text"
+								className="form-control"
+								aria-label="Name"
+								aria-describedby="player-name"
+								ref={fieldName}
+								/>
+						</div>
+					</div>
+					<button className="btn btn-secondary" onClick={() => {
+						let number = Number(fieldNumber.current.value);
+						let name = fieldName.current.value;
+						
+						if (name.length > 0)
+						{
+							switch(props.action) {
+								case actions.ADD: {
+									props.setAllPlayers([...props.allPlayers, {
+										id: props.allPlayers.length, number: number, name: name, lineup: 0, position: ""
+									}]);
+									break;
+								}
+
+								case actions.EDIT: {									
+									props.setAllPlayers(props.allPlayers.map((iplayer) => {
+										if (iplayer.id === props.selectedPlayer) {
+											return { ...iplayer, number: number, name: name };
+										}
+										return iplayer;
+									}));
+									break;
+								}
+
+								default: break;
+							}
+							
+							fieldName.current.value = "";
+							fieldNumber.current.value = "";
+							props.setFormPlayerShow(false);
+							props.setSelectedPlayer(null);
+						}
+						}}>
+						{props.action === actions.ADD && "+"}
+						{props.action === actions.EDIT && "ULOŽ"}						
+					</button>
+				</div>
+			</div>
+}
+
 function App() {
 	const [allPlayers, setAllPlayers] = useState([
 		{ id: 0, name: "Michal", number: 5, lineup: 0, position: "" },
@@ -118,13 +221,8 @@ function App() {
 		setSelectedPlayer(null);
 	}
 
-	const [menuAddPlayer, setMenuAddPlayer] = useState(false);
-	const playerAddName = useRef(null);
-	const playerAddNumber = useRef(null);
-	
-	const [menuEditPlayer, setMenuEditPlayer] = useState(false);
-	const playerEditName = useRef(null);
-	const playerEditNumber = useRef(null);	
+	const [formPlayerShow, setFormPlayerShow] = useState(false);
+	const [action, setAction] = useState(actions.ADD);
 
 	return (
 		<div className="container-fluid">
@@ -177,7 +275,10 @@ function App() {
 					<div className="container">
 						<div className="row">
 							<div className="col">
-								<button className="btn btn-success btn-sm" onClick={() => setMenuAddPlayer(true)}>
+								<button className="btn btn-success btn-sm" onClick={() => {
+									setAction(actions.ADD);
+									setFormPlayerShow(true)
+									}}>
 									<img alt="add" src={require('./images/add.png')} />
 								</button>
 							</div>
@@ -186,10 +287,8 @@ function App() {
 							<div className="col">
 								<button className="btn btn-warning btn-sm" onClick={() => {
 									if (selectedPlayer !== null) {
-										let player = allPlayers.filter(iplayer => iplayer.id === selectedPlayer)[0];
-										playerEditNumber.current.value = player.number;
-										playerEditName.current.value = player.name;
-										setMenuEditPlayer(true);										
+										setAction(actions.EDIT);
+										setFormPlayerShow(true);										
 									}
 									}}>
 									<img alt="edit" src={require('./images/reset.png')} />
@@ -207,139 +306,11 @@ function App() {
 				</div>
 			</div>
 
-			{//#region MENU Add player
-			}
-			<div className="container mw-100" style={{
-					position: 'fixed',
-					backgroundColor: "hsl(0deg 0% 100% / 50%)",
-					left: 0,
-					right: 0,
-					top: 0,
-					bottom: 0,
-					zIndex: 1,
-					display: menuAddPlayer ? 'block' : 'none',
-			 	}}>
-				<div className="container" style={{
-					backgroundColor: 'red',
-					marginTop: '1rem',
-					height: '90%',
-					zIndex: 1,
-					}}>
-					<div className="row mb-3">
-						<div className="col">
-							<button className="btn btn-secondary" onClick={() => setMenuAddPlayer(false)}>X</button>
-						</div>
-					</div>
-					<div className="row">
-						<div className="input-group mb-1">
-							<div className="input-group-prepend">
-								<span className="input-group-text" id="player-number">#</span>
-							</div>
-							<input type="number" min="0" max="99"
-								className="form-control"
-								aria-label="Number"
-								aria-describedby="player-number"
-								ref={playerAddNumber}
-								/>
-						</div>
-					</div>
-					<div className="row">
-						<div className="input-group mb-1">
-							<div className="input-group-prepend">
-								<span className="input-group-text" id="player-name">Meno</span>
-							</div>
-							<input type="text"
-								className="form-control"
-								aria-label="Name"
-								aria-describedby="player-name"
-								ref={playerAddName}
-								/>
-						</div>
-					</div>
-					<button className="btn btn-secondary" onClick={() => {
-						let number = Number(playerAddNumber.current.value);
-						let name = playerAddName.current.value;
-						
-						if (name.length > 0)
-						{
-							setAllPlayers([...allPlayers, {
-								id: allPlayers.length, number: number, name: name, lineup: 0, position: ""
-							}]);
-							playerAddName.current.value = "";
-							playerAddNumber.current.value = "";
-							setMenuAddPlayer(false);
-						}
-						}}>+</button>
-				</div>
-			</div>
-			
-			{//#region MENU Edit player
-			}
-			<div className="container mw-100" style={{
-					position: 'fixed',
-					backgroundColor: "hsl(0deg 0% 100% / 50%)",
-					left: 0,
-					right: 0,
-					top: 0,
-					bottom: 0,
-					zIndex: 1,
-					display: menuEditPlayer ? 'block' : 'none',
-			 	}}>
-				<div className="container" style={{
-					backgroundColor: 'red',
-					marginTop: '1rem',
-					height: '90%',
-					zIndex: 1,
-					}}>
-					<div className="row mb-3">
-						<div className="col">
-							<button className="btn btn-secondary" onClick={() => setMenuEditPlayer(false)}>X</button>
-						</div>
-					</div>
-					<div className="row">
-						<div className="input-group mb-1">
-							<div className="input-group-prepend">
-								<span className="input-group-text" id="player-number">#</span>
-							</div>
-							<input type="number" min="0" max="99"
-								className="form-control"
-								aria-label="Number"
-								aria-describedby="player-number"
-								ref={playerEditNumber}
-								/>
-						</div>
-					</div>
-					<div className="row">
-						<div className="input-group mb-1">
-							<div className="input-group-prepend">
-								<span className="input-group-text" id="player-name">Meno</span>
-							</div>
-							<input type="text"
-								className="form-control"
-								aria-label="Name"
-								aria-describedby="player-name"
-								ref={playerEditName}
-								/>
-						</div>
-					</div>
-					<button className="btn btn-secondary" onClick={() => {
-						let number = Number(playerEditNumber.current.value);
-						let name = playerEditName.current.value;
-						
-						if (name.length > 0)
-						{
-							setAllPlayers(allPlayers.map((iplayer) => {
-								if (iplayer.id === selectedPlayer) {
-									return { ...iplayer, number: number, name: name };
-								}
-								return iplayer;
-							}));
-							setMenuEditPlayer(false);
-							setSelectedPlayer(null);
-						}
-						}}>Ulož</button>
-				</div>
-			</div>
+			<FormPlayer allPlayers={allPlayers} setAllPlayers={setAllPlayers}
+						selectedPlayer={selectedPlayer} setSelectedPlayer={setSelectedPlayer}
+						formPlayerShow={formPlayerShow} setFormPlayerShow={setFormPlayerShow}
+						action={action} />
+
 		</div>
 	);
 }
