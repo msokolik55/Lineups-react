@@ -88,8 +88,8 @@ const Board = (props) => {
 							.filter(player => player.lineup === props.lineupID && player.position === props.position)
 							.map((player) => (
 								<Player
-									id={player.number}
-									key={player.number}
+									id={player.id}
+									key={player.id}
 									player={player}
 									allPlayers={props.allPlayers}
 									setAllPlayers={props.setAllPlayers}
