@@ -16,11 +16,16 @@ function FormPlayer(props) {
 	const fieldNumber = useRef(null);
 
 	useEffect(() => {
-		if (props.selectedPlayer === null) return;
+		if (props.selectedPlayer === null || props.action === actions.ADD) {
+			fieldNumber.current.value = "";
+			fieldName.current.value = "";
+			return;
+		}
+		
 		let player = props.allPlayers.filter(iplayer => iplayer.id === props.selectedPlayer)[0];
 		fieldNumber.current.value = player.number;
 		fieldName.current.value = player.name;
-	}, [props.selectedPlayer, props.allPlayers])
+	}, [props.selectedPlayer, props.allPlayers, props.action])
 
 	return <div className="container mw-100 form-container" style={{ display: props.formPlayerShow ? 'block' : 'none' }}>
 				<div className="container form-content">
