@@ -5,6 +5,7 @@ import './App.css';
 import Lineup from './components/Lineup'
 import Board from './components/Board'
 
+// Enums
 const actions = {
 	ADD: 0,
 	EDIT: 1,
@@ -21,22 +22,8 @@ function FormPlayer(props) {
 		fieldName.current.value = player.name;
 	}, [props.selectedPlayer, props.allPlayers])
 
-	return <div className="container mw-100" style={{
-				position: 'fixed',
-				backgroundColor: "hsl(0deg 0% 100% / 50%)",
-				left: 0,
-				right: 0,
-				top: 0,
-				bottom: 0,
-				zIndex: 1,
-				display: props.formPlayerShow ? 'block' : 'none',
-				}}>
-				<div className="container" style={{
-					backgroundColor: 'red',
-					marginTop: '1rem',
-					height: '90%',
-					zIndex: 1,
-					}}>
+	return <div className="container mw-100 form-container" style={{ display: props.formPlayerShow ? 'block' : 'none' }}>
+				<div className="container form-content">
 					<div className="row mb-3">
 						<div className="col">
 							<button className="btn btn-secondary" onClick={() => props.setFormPlayerShow(false)}>X</button>
@@ -103,6 +90,25 @@ function FormPlayer(props) {
 						}}>
 						{props.action === actions.ADD && "+"}
 						{props.action === actions.EDIT && "ULOŽ"}						
+					</button>
+				</div>
+			</div>
+}
+
+function FormConfirm(props) {
+	return <div className="container mw-100 form-container" style={{ display: props.formConfirmShow ? 'block' : 'none' }}>
+				<div className="container form-content">
+					<button className="btn btn-secondary" onClick={() => {
+						props.yesFunction();
+						props.setFormConfirmShow(false);
+						}}>
+						Áno					
+					</button>
+					<button className="btn btn-secondary" onClick={() => {
+						props.noFunction();
+						props.setFormConfirmShow(false);
+						}}>
+						Nie					
 					</button>
 				</div>
 			</div>
@@ -223,6 +229,7 @@ function App() {
 
 	const [formPlayerShow, setFormPlayerShow] = useState(false);
 	const [action, setAction] = useState(actions.ADD);
+	const [formConfirmShow, setFormConfirmShow] = useState(false);
 
 	return (
 		<div className="container-fluid">
@@ -302,9 +309,19 @@ function App() {
 								</button>
 							</div>
 						</div>
+						<div className="row">
+							<div className="col">
+								<button className="btn btn-danger btn-sm" onClick={() => setFormConfirmShow(true)}>
+									:(
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+
+			<FormConfirm formConfirmShow={formConfirmShow} setFormConfirmShow={setFormConfirmShow}
+						 yesFunction={() => setAllPlayers([])} noFunction={() => {}} />
 
 			<FormPlayer allPlayers={allPlayers} setAllPlayers={setAllPlayers}
 						selectedPlayer={selectedPlayer} setSelectedPlayer={setSelectedPlayer}
