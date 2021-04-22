@@ -287,16 +287,36 @@ function FormConfirm(props) {
 }
 
 function App() {
-	const [allPlayers, setAllPlayers] = useState([
-		{ id: 0, name: "Michal", number: 5, lineup: 0, position: "" },
-		{ id: 1, name: "Jozef", number: 9, lineup: 0, position: "" },
-		{ id: 2, name: "Martin", number: 8, lineup: 0, position: "" },
-		{ id: 3, name: "Peter", number: 6, lineup: 0, position: "" },
-		{ id: 4, name: "Anton", number: 4, lineup: 0, position: "" },
-		{ id: 5, name: "Vlado", number: 3, lineup: 0, position: "" },
-		{ id: 6, name: "Roman", number: 1, lineup: 0, position: "" }
-	]);
-	const [lineups, setLineups] = useState([{ id: 0 }, { id: 1 }]);
+	const [allPlayers, setAllPlayers] = useState([]);
+	const [lineups, setLineups] = useState([{ id: 0 }]);
+
+	//#region idb-keyval
+	const idbKeyval = require("idb-keyval");
+
+	// get data from db
+	useEffect(() => {
+		idbKeyval.get("players").then((val) => {
+			if (val === undefined) setAllPlayers([]);
+			else setAllPlayers(val);
+		});
+
+		idbKeyval.get("lineups").then((val) => {
+			if (val === undefined) setLineups([{ id: 0 }]);
+			else setLineups(val);
+		});
+	}, [idbKeyval]);
+
+	// update players in db
+	useEffect(() => {
+		idbKeyval.set("players", allPlayers);
+	}, [allPlayers, idbKeyval]);
+
+	// update lineups in db
+	useEffect(() => {
+		idbKeyval.set("lineups", lineups);
+	}, [lineups, idbKeyval]);
+	//#endregion
+
 	const [updatedIDs, setUpdatedIDs] = useState(true);
 
 	const addLineup = () => {
@@ -357,46 +377,6 @@ function App() {
 		// eslint-disable-next-line
 	}, [lineups]);
 
-	//#region MYSQL
-	// function FetchItems(command) {
-	// 	console.log(command)
-
-	// 	fetch('http://www.sokos.sk/florbaldca2/servis/function/database_rn.php', {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			'Accept': 'application/json',
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 		body: JSON.stringify({
-	// 			command: command,
-	// 		})
-	// 	})
-	// 	.then(response => response.json())
-	// 		.then(responseJSON => {
-	// 			//console.log(responseJSON);
-	// 			let tmp = [];
-	// 			responseJSON.map(obj => tmp.push({
-	// 				id: obj.id,
-	// 				name: obj.name,
-	// 				number: obj.id,
-	// 				lineup: 0,
-	// 				position: "",
-	// 				selected: false,
-	// 			}));
-	// 			//console.log(responseJSON);
-	// 			setAllPlayers(tmp);
-	// 		})
-	// 	.catch(err => {
-	// 		console.log("Failure: " + err);
-	// 	})
-	// }
-
-	// const comm = "SELECT nID AS number, nID AS id, sName AS name, sLastName" +
-	// 			 " FROM ssfb_vsplayers" +
-	// 			 " WHERE nIDSeason='8' AND nIDVSTeam='1'" +
-	// 			 " LIMIT 20";
-	//#endregion
-
 	const [selectedPlayer, setSelectedPlayer] = useState(null);
 	const deletePlayer = () => {
 		setAllPlayers(allPlayers.filter((iplayer) => iplayer.id !== selectedPlayer));
@@ -413,14 +393,6 @@ function App() {
 				<h1>Zostavy</h1>
 
 				<div className="row">
-					{/* <div className="col">
-						<button
-							className="btn btn-outline-light"
-							onClick={() => FetchItems(comm)}
-							>
-							Fetch from DB
-						</button>
-					</div> */}
 					<div className="col text-end">
 						<button className="btn btn-success btn-sm" onClick={addLineup}>
 							<img alt="add" src={require("./images/add.png")} />
@@ -453,7 +425,7 @@ function App() {
 			</div>
 
 			<div className="row">
-				<div className="col-11">
+				<div className="col-10">
 					<Board
 						allPlayers={allPlayers}
 						setAllPlayers={setAllPlayers}
@@ -464,7 +436,7 @@ function App() {
 						setSelectedPlayer={setSelectedPlayer}
 					/>
 				</div>
-				<div className="col-1" style={{ display: "flex", alignItems: "center" }}>
+				<div className="col-2" style={{ display: "flex", alignItems: "center" }}>
 					<div className="container">
 						<div className="row">
 							<div className="col">
