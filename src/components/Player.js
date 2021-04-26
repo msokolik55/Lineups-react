@@ -1,20 +1,19 @@
-import React from 'react'
+import React from "react";
 
 const Player = (props) => {
-
 	const dragStart = (e) => {
 		const target = e.target;
-		e.dataTransfer.setData('player_id', target.id);
-	}
+		e.dataTransfer.setData("player_id", target.id);
+	};
 
 	const dragOver = (e) => {
 		e.stopPropagation();
-	}
+	};
 
 	const handleClick = (e) => {
 		const target = e.target;
 		props.setSelectedPlayer(Number(target.id));
-	}
+	};
 
 	return (
 		<div
@@ -24,26 +23,25 @@ const Player = (props) => {
 			onDragStart={dragStart}
 			onDragOver={dragOver}
 			onClick={handleClick}
-			style={{ pointerEvents: 'visible' }}
-			>
+			style={{ pointerEvents: "visible" }}>
 			<div
 				className="card"
 				style={{
-					pointerEvents: 'none',
-					backgroundColor: props.player.id === props.selectedPlayer ? 'red' : '',
+					pointerEvents: "none",
+					backgroundColor: props.player.id === props.selectedPlayer ? "red" : ""
 				}}>
 				<div className="div-player-row">
 					<div className="div-player-jersey">
-						<h2>{props.player.number}</h2>
+						<h5>{props.player.number}</h5>
 					</div>
 				</div>
 
 				<div className="card-row">
-					<h4>{props.player.name}</h4>
+					<p>{props.player.name}</p>
 				</div>
 			</div>
-    </div>
-  )
-}
+		</div>
+	);
+};
 
 export default Player;

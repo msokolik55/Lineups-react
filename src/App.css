@@ -1,6 +1,6 @@
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 h1,
@@ -8,121 +8,121 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-  background-image: url("./images/pozadie2_opacity2.png");
-  background-color: #004080;
-  background-repeat: repeat-y;
+	background-image: url("./images/pozadie2_opacity2.png");
+	background-color: #004080;
+	background-repeat: repeat-y;
 }
 
 header {
-  text-align: center;
-  color: white;
+	text-align: center;
+	color: white;
 }
 
 button {
-  background-color: white;
-  border-radius: 10px;
+	background-color: white;
+	border-radius: 10px;
 }
 
 img {
-  width: 20px;
-  height: 20px;
+	width: 20px;
+	height: 20px;
 }
 
 .App {
-  padding-top: 20px;
+	padding-top: 20px;
 }
 
 .wrapper {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  justify-content: center;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
 }
 
 .div-row {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .div-nav {
-  text-align: right;
+	text-align: right;
 }
 
 /* FORM */
 .form-container {
-  position: fixed;
-  background-color: hsl(0deg 0% 100% / 50%);
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 1;
+	position: fixed;
+	background-color: hsl(0deg 0% 100% / 50%);
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 1;
 }
 
 .form-content {
-  background-color: red;
-  margin-top: 1rem;
-  height: 90%;
-  z-index: 1;
+	background-color: red;
+	margin-top: 1rem;
+	height: 90%;
+	z-index: 1;
 }
 
 /* LINEUP */
 .div-lineup {
-  /* min-height: 50vh; */
-  padding-top: 10px;
-  margin-bottom: 10px;
-  background-image: url("./images/flrbl_pitch.png");
-  background-size: 100% 100%;
-  text-align: center;
+	/* min-height: 50vh; */
+	padding-top: 10px;
+	margin-bottom: 10px;
+	background-image: url("./images/flrbl_pitch.png");
+	background-size: 100% 100%;
+	text-align: center;
 }
 
 .div-lineup-boards {
-  display: flex;
-  justify-content: space-around;
+	display: flex;
+	justify-content: space-around;
 }
 
 /* BOARD */
 .div-board {
-  text-align: center;
-  margin: 0px 10px 0px 10px;
-  min-width: 20vh;
-  border-radius: 5px;
-  /* color: white;*/
-  overflow-y: auto;
-  height: 80vh;
+	text-align: center;
+	margin: 0px 10px 0px 10px;
+	min-width: 20vh;
+	border-radius: 5px;
+	/* color: white;*/
+	overflow-y: auto;
+	height: 80vh;
 }
 
 .div-board-title {
-  background-color: navy;
-  color: white;
-  padding: 10px 0px 10px 0px;
+	background-color: navy;
+	color: white;
+	padding: 10px 0px 10px 0px;
 }
 
 .div-board-players {
-  background-color: white;
-  padding-top: 10px;
-  margin-bottom: 10px;
+	background-color: white;
+	padding-top: 10px;
+	margin-bottom: 10px;
 }
 
 .div-board-lineup {
-  max-height: 66vh;
-  overflow: auto;
+	max-height: 66vh;
+	overflow: auto;
 }
 
 /* PLAYER */
 .div-player {
-  padding: 3px;
-  margin: auto;
-  min-width: 60px;
-  max-width: 50%;
-  text-align: center;
-  border-radius: 10px;
-  color: navy;
+	padding: 3px;
+	margin: auto;
+	min-width: 60px;
+	max-width: 50%;
+	text-align: center;
+	border-radius: 10px;
+	color: navy;
 }
 
 /*.div-player:hover {
@@ -131,33 +131,36 @@ img {
 */
 
 .div-player-row {
-  display: flex;
-  justify-content: center;
-  vertical-align: middle;
+	display: flex;
+	justify-content: center;
+	vertical-align: middle;
 }
 
-.div-player-row h4 {
-  line-height: 1.5;
-  margin-left: 5px;
-  margin-right: 5px;
-  display: inline-block;
+.div-player-row h4 h5 h6 {
+	line-height: 1.5;
+	margin-left: 5px;
+	margin-right: 5px;
+	display: inline-block;
 }
 
 .div-player-jersey {
-  background-image: url("./images/jersey.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position-x: center;
-  width: 60px;
-  height: 60px;
+	background-image: url("./images/jersey.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position-x: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
 }
 
-.div-player-jersey h2 {
-  line-height: 2.5;
-  display: inline-block;
+.div-player-jersey h2 h3 h4 h5 h6 {
+	line-height: 2.5;
+	display: inline-block;
 }
 
 .hide {
-  /*display: none;*/
-  visibility: collapse;
+	/*display: none;*/
+	visibility: collapse;
 }
