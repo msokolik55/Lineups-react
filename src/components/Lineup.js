@@ -48,7 +48,7 @@ const Lineup = (props) => {
 	return (
 		<div
 			id={`lineup-${props.lineupID}`}
-			className="mh-70 my-3 container bg-dark py-3">
+			className="mh-70 mx-1 container bg-dark py-3">
 			{/* #region Header */}
 			<div className="container-fluid text-center text-light">
 				<div className="row">

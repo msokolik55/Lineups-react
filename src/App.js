@@ -406,7 +406,9 @@ function App() {
 				</div>
 			</div>
 
-			<div className="row mh-50 overflow-auto" style={{ height: "63vh" }}>
+			<div
+				className="row mh-50 overflow-auto d-flex flex-column"
+				style={{ height: "60vh" }}>
 				{lineups.map((ilineup, index) => (
 					<Lineup
 						key={index}
@@ -424,71 +426,56 @@ function App() {
 				))}
 			</div>
 
-			<div className="row">
-				<div className="col-10">
-					<Board
-						allPlayers={allPlayers}
-						setAllPlayers={setAllPlayers}
-						lineupID={0}
-						title="Hraci"
-						position=""
-						selectedPlayer={selectedPlayer}
-						setSelectedPlayer={setSelectedPlayer}
-					/>
+			<div className="row" style={{ display: "flex", alignItems: "center" }}>
+				<div className="col text-center">
+					<button
+						className="btn btn-success btn-sm"
+						onClick={() => {
+							setAction(actions.ADD);
+							setFormPlayerShow(true);
+						}}>
+						<img alt="add" src={require("./images/add.png")} />
+					</button>
 				</div>
-				<div className="col-2" style={{ display: "flex", alignItems: "center" }}>
-					<div className="container">
-						<div className="row">
-							<div className="col">
-								<button
-									className="btn btn-success btn-sm"
-									onClick={() => {
-										setAction(actions.ADD);
-										setFormPlayerShow(true);
-									}}>
-									<img alt="add" src={require("./images/add.png")} />
-								</button>
-							</div>
-						</div>
-						<div className="row">
-							<div className="col">
-								<button
-									className="btn btn-warning btn-sm"
-									onClick={() => {
-										if (selectedPlayer !== null) {
-											setAction(actions.EDIT);
-											setFormPlayerShow(true);
-										}
-									}}>
-									<img alt="edit" src={require("./images/reset.png")} />
-								</button>
-							</div>
-						</div>
-						<div className="row">
-							<div className="col">
-								<button
-									className="btn btn-danger btn-sm"
-									onClick={() => deletePlayer()}>
-									<img
-										alt="delete"
-										src={require("./images/delete.png")}
-									/>
-								</button>
-							</div>
-						</div>
-						<div className="row">
-							<div className="col">
-								<button
-									className="btn btn-danger btn-sm"
-									onClick={() => setFormConfirmShow(true)}>
-									:(
-								</button>
-							</div>
-						</div>
-					</div>
+				<div className="col text-center">
+					<button
+						className="btn btn-warning btn-sm"
+						onClick={() => {
+							if (selectedPlayer !== null) {
+								setAction(actions.EDIT);
+								setFormPlayerShow(true);
+							}
+						}}>
+						<img alt="edit" src={require("./images/reset.png")} />
+					</button>
+				</div>
+				<div className="col text-center">
+					<button
+						className="btn btn-danger btn-sm"
+						onClick={() => deletePlayer()}>
+						<img alt="delete" src={require("./images/delete.png")} />
+					</button>
+				</div>
+				<div className="col text-center">
+					<button
+						className="btn btn-danger btn-sm"
+						onClick={() => setFormConfirmShow(true)}>
+						:(
+					</button>
 				</div>
 			</div>
 
+			<div className="row">
+				<Board
+					allPlayers={allPlayers}
+					setAllPlayers={setAllPlayers}
+					lineupID={0}
+					title="Hraci"
+					position=""
+					selectedPlayer={selectedPlayer}
+					setSelectedPlayer={setSelectedPlayer}
+				/>
+			</div>
 			<FormConfirm
 				formConfirmShow={formConfirmShow}
 				setFormConfirmShow={setFormConfirmShow}

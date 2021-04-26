@@ -103,8 +103,8 @@ const Board = (props) => {
 				style={{ pointerEvents: "none" }}>
 				<h5 className="mb-0">{props.title}</h5>
 			</div>
-			<div className="row bg-light" style={{ pointerEvents: "none" }}>
-				<div className="card-group flex-nowrap overflow-auto">
+			<div className="row bg-light">
+				<div className="d-flex flex-row overflow-auto">
 					{props.allPlayers
 						.filter(
 							(player) =>

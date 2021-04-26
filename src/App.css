@@ -55,7 +55,7 @@ img {
 
 /* FORM */
 .form-container {
-	position: fixed;
+	position: absolute;
 	background-color: hsl(0deg 0% 100% / 50%);
 	left: 0;
 	right: 0;
