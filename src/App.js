@@ -439,6 +439,16 @@ function App() {
 				</div>
 				<div className="col text-center">
 					<button
+						className="btn btn-danger btn-sm"
+						onClick={() => setFormConfirmShow(true)}>
+						:(
+					</button>
+				</div>
+				<div
+					className={`col text-center ${
+						selectedPlayer !== null ? "" : "hide"
+					}`}>
+					<button
 						className="btn btn-warning btn-sm"
 						onClick={() => {
 							if (selectedPlayer !== null) {
@@ -449,18 +459,14 @@ function App() {
 						<img alt="edit" src={require("./images/reset.png")} />
 					</button>
 				</div>
-				<div className="col text-center">
+				<div
+					className={`col text-center ${
+						selectedPlayer !== null ? "" : "hide"
+					}`}>
 					<button
 						className="btn btn-danger btn-sm"
 						onClick={() => deletePlayer()}>
 						<img alt="delete" src={require("./images/delete.png")} />
-					</button>
-				</div>
-				<div className="col text-center">
-					<button
-						className="btn btn-danger btn-sm"
-						onClick={() => setFormConfirmShow(true)}>
-						:(
 					</button>
 				</div>
 			</div>
