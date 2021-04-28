@@ -53,21 +53,29 @@ export function register(config) {
 		});
 	}
 
-	window.addEventListener("activate", function (event) {
-		event.waitUntil(
-			caches.keys().then(function (names) {
-				for (let name of names) caches.delete(name);
-			})
-		);
+	// window.addEventListener("activate", function (event) {
+	// 	event.waitUntil(
+	// 		caches.keys().then(function (names) {
+	// 			for (let name of names) caches.delete(name);
+	// 		})
+	// 	);
 
-		window.location.href = "./";
-	});
+	// 	window.location.href = "./";
+	// });
 }
 
 function registerValidSW(swUrl, config) {
 	navigator.serviceWorker
 		.register(swUrl)
 		.then((registration) => {
+			// Check for updates at start.
+			registration.update();
+			// Check for updates every 5 min.
+			setInterval(() => {
+				registration.update();
+				console.debug("Checked for update...");
+			}, 1000 * 60 * 5);
+
 			registration.onupdatefound = () => {
 				const installingWorker = registration.installing;
 				if (installingWorker == null) {
