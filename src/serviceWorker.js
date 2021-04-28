@@ -10,9 +10,9 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
-self.addEventListener("message", (event) => {
+window.addEventListener("message", (event) => {
 	if (event.data && event.data.type === "SKIP_WAITING") {
-		self.skipWaiting();
+		window.skipWaiting();
 		console.log("skipping");
 	}
 });
