@@ -476,7 +476,7 @@ function App() {
 					allPlayers={allPlayers}
 					setAllPlayers={setAllPlayers}
 					lineupID={0}
-					title="Hraci"
+					title="Hráči"
 					position=""
 					selectedPlayer={selectedPlayer}
 					setSelectedPlayer={setSelectedPlayer}
