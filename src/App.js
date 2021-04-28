@@ -390,7 +390,7 @@ function App() {
 	return (
 		<div className="container-fluid">
 			<div className="row text-center text-light my-1">
-				<h1>Zostavy</h1>
+				<h1>Zostavy hracov</h1>
 
 				<div className="row">
 					<div className="col text-end">

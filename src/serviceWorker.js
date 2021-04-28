@@ -10,6 +10,13 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
+self.addEventListener("message", (event) => {
+	if (event.data && event.data.type === "SKIP_WAITING") {
+		self.skipWaiting();
+		console.log("skipping");
+	}
+});
+
 const isLocalhost = Boolean(
 	window.location.hostname === "localhost" ||
 		// [::1] is the IPv6 localhost address.
@@ -91,6 +98,7 @@ function registerValidSW(swUrl, config) {
 								"New content is available and will be used when all " +
 									"tabs for this page are closed. See https://bit.ly/CRA-PWA."
 							);
+							installingWorker.postMessage({ type: "SKIP_WAITING" });
 
 							// Execute callback
 							if (config && config.onUpdate) {
