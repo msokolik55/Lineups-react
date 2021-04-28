@@ -441,7 +441,7 @@ function App() {
 					<button
 						className="btn btn-danger btn-sm"
 						onClick={() => setFormConfirmShow(true)}>
-						:(
+						<img alt="delete" src={require("./images/trash.png")} />
 					</button>
 				</div>
 				<div
